@@ -1,0 +1,21 @@
+services:
+  nginx:
+    container_name: nginx
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file:
+      - .env
+    ports:
+      - "8080:443"
+  mariadb:
+    container_name: mariadb
+    build:
+      context: mariadb
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file:
+      - .env
+    ports:
+      - "3306"
