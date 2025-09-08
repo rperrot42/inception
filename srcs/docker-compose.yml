@@ -18,4 +18,14 @@ services:
     env_file:
       - .env
     ports:
-      - "3306"
+      - "3306:3306"
+    volumes:
+      - /Users/raphaelperrot/SynologyDrive/Documents/inception/data/mariadb:/var/lib/mysql
+  wordpress:
+    container_name: wordpress
+    build:
+      context: wordpress
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file:
+      - .env

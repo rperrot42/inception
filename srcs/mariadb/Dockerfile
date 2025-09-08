@@ -12,12 +12,12 @@ RUN mkdir -p /var/run/mysqld
 
 #ajout les droit pour l'utilisateur mysql pour run les droits
 RUN chown mysql:mysql /var/run/mysqld
-Run mkdir -p /home/rperrot/data
+RUN mkdir -p /home/rperrot/data
 
 
 expose 3306
 
-VOLUME ["/home/rperrot/data"]
+VOLUME ["/var/lib/mysql"]
 
 # Copier les scripts de configueration sur le docker
 COPY docker-entrypoint.sh /usr/local/bin/

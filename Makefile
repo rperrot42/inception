@@ -1,10 +1,24 @@
+OS := $(shell uname)
+ifeq ($(OS), Linux)
+	DOCKER_COMPOSE = docker compose
+else
+	DOCKER_COMPOSE = docker-compose
+endif
+
+
 all:
-	docker compose -f srcs/docker-compose.yml up --build -d
+	$(DOCKER_COMPOSE) -f ./srcs/docker-compose.yml up --build -d
 
 clean:
-	docker compose -f ./srcs/docker-compose.yml down
-	docker container prune -f
-	docker image prune -a -f
-	docker volume prune -f
-	docker network prune -f
+	$(DOCKER_COMPOSE) -f srcs/docker-compose.yml down -v --rmi local
 
+fclean:
+ifeq ($(OS), Linux)
+	rm -rf /home/rperrot/data
+else
+	rm -rf /Users/raphaelperrot/SynologyDrive/Documents/inception/data
+endif
+
+re: fclean all
+
+.PHONY: all clean fclean re
