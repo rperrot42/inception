@@ -2,7 +2,7 @@ services:
   nginx:
     container_name: nginx
     build:
-      context: nginx
+      context: requirements/nginx
       dockerfile: Dockerfile
     restart: on-failure
     env_file:
@@ -12,7 +12,7 @@ services:
   mariadb:
     container_name: mariadb
     build:
-      context: mariadb
+      context: requirements/mariadb
       dockerfile: Dockerfile
     restart: on-failure
     env_file:
@@ -20,11 +20,11 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - /Users/raphaelperrot/SynologyDrive/Documents/inception/data/mariadb:/var/lib/mysql
+      - /home/rperrot/Documents/cercle5/inception/data/mariadb:/var/lib/mysql
   wordpress:
     container_name: wordpress
     build:
-      context: wordpress
+      context: requirements/wordpress
       dockerfile: Dockerfile
     restart: on-failure
     env_file:

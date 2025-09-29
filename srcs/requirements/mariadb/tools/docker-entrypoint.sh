@@ -1,3 +1,4 @@
+#si une commande echoue le script s'arrete
 set -e
 
 # condition pour savoir si le dossier mysql existe
