@@ -18,7 +18,7 @@ services:
     env_file:
       - .env
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - /home/rperrot/Documents/cercle5/inception/data/mariadb:/var/lib/mysql
   wordpress:

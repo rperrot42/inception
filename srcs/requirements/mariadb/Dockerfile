@@ -20,9 +20,9 @@ expose 3306
 VOLUME ["/var/lib/mysql"]
 
 # Copier les scripts de configueration sur le docker
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY tools/docker-entrypoint.sh /usr/local/bin/
 #copier la config de mariadb
-COPY my.cnf /etc/mysql/mariadb.conf.d/99-custom.cnf
+COPY conf/my.cnf /etc/mysql/mariadb.conf.d/99-custom.cnf
 
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
