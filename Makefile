@@ -12,7 +12,7 @@ all:
 clean:
 	$(DOCKER_COMPOSE) -f srcs/docker-compose.yml down -v --rmi local
 
-fclean:
+fclean: clean
 ifeq ($(OS), Linux)
 	rm -rf /home/rperrot/data
 else

@@ -20,7 +20,7 @@ services:
     ports:
       - "3307:3306"
     volumes:
-      - /home/rperrot/Documents/cercle5/inception/data/mariadb:/var/lib/mysql
+      - /Users/raphaelperrot/SynologyDrive/Documents/inception/data/mariadb:/var/lib/mysql
   wordpress:
     container_name: wordpress
     build:

@@ -1,7 +1,7 @@
 FROM debian:bookworm
  #installation de mariadb
 
-RUN    apt-get update
+RUN    apt-get update -y
 RUN    apt-get upgrade -y
 
 RUN  apt-get  install mariadb-server  -y
@@ -15,6 +15,7 @@ RUN chown mysql:mysql /var/run/mysqld
 RUN mkdir -p /home/rperrot/data
 
 
+
 expose 3306
 
 VOLUME ["/var/lib/mysql"]
@@ -23,6 +24,7 @@ VOLUME ["/var/lib/mysql"]
 COPY tools/docker-entrypoint.sh /usr/local/bin/
 #copier la config de mariadb
 COPY conf/my.cnf /etc/mysql/mariadb.conf.d/99-custom.cnf
+COPY tools/init-db.sql /docker-entrypoint-initdb.d/
 
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
