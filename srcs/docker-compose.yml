@@ -18,9 +18,9 @@ services:
     env_file:
       - .env
     ports:
-      - "3307:3306"
+      - "5000:3306"
     volumes:
-      - /Users/raphaelperrot/SynologyDrive/Documents/inception/data/mariadb:/var/lib/mysql
+      - /home/rperrot/data/mariadb:/var/lib/mysql
   wordpress:
     container_name: wordpress
     build:

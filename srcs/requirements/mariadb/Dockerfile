@@ -12,7 +12,6 @@ RUN mkdir -p /var/run/mysqld
 
 #ajout les droit pour l'utilisateur mysql pour run les droits
 RUN chown mysql:mysql /var/run/mysqld
-RUN mkdir -p /home/rperrot/data
 
 
 
@@ -24,7 +23,6 @@ VOLUME ["/var/lib/mysql"]
 COPY tools/docker-entrypoint.sh /usr/local/bin/
 #copier la config de mariadb
 COPY conf/my.cnf /etc/mysql/mariadb.conf.d/99-custom.cnf
-COPY tools/init-db.sql /docker-entrypoint-initdb.d/
 
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 

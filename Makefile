@@ -9,15 +9,14 @@ endif
 all:
 	$(DOCKER_COMPOSE) -f ./srcs/docker-compose.yml up --build -d
 
+
 clean:
-	$(DOCKER_COMPOSE) -f srcs/docker-compose.yml down -v --rmi local
+	$(DOCKER_COMPOSE) -f srcs/docker-compose.yml down
 
 fclean: clean
-ifeq ($(OS), Linux)
-	rm -rf /home/rperrot/data
-else
-	rm -rf /Users/raphaelperrot/SynologyDrive/Documents/inception/data
-endif
+	docker rmi nginx wordpress mariadb || true
+	docker volume prune -f
+	docker system prune -f
 
 re: fclean all
 
