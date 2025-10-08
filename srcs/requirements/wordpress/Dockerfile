@@ -1,8 +1,22 @@
 FROM debian:bookworm
- #installation de mariadb
 
-RUN    apt-get update
-RUN    apt-get upgrade -y
+RUN apt update -y
 
-RUN  apt-get  install wordpress -y
-RUN  rm -rf /var/lib/apt/lists/*
+RUN apt install php-fpm php-mysql -y
+
+RUN apt install curl -y
+RUN mkdir -p /var/www/html
+
+
+VOLUME ["/var/www/html"]
+
+EXPOSE 9000
+
+COPY tools/docker-entrypoint.sh /usr/local/bin/
+
+COPY config/wp-config.php /var/www/html/
+
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+#CMD ["mariadbd"]
+CMD ["sh", "/usr/local/bin/docker-entrypoint.sh"]
