@@ -1,24 +1,4 @@
 services:
-  nginx:
-    container_name: nginx
-    build:
-      context: requirements/nginx
-      dockerfile: Dockerfile
-    restart: on-failure
-    networks:
-      - inception
-    env_file:
-      - .env
-    ports:
-      - "443:443"
-    depends_on:
-      - wordpress
-    secrets:
-      - ssl_key
-      - ssl_crt
-    volumes:
-      - wordpress_data:/var/www/html
-
   mariadb:
     container_name: mariadb
     build:
@@ -30,23 +10,48 @@ services:
     volumes:
       - mariadb_data:/var/lib/mysql
     networks:
-      - inception
-
+      - backend
 
   wordpress:
     container_name: wordpress
     build:
       context: requirements/wordpress
       dockerfile: Dockerfile
-    restart: on-failure
+    restart: always
     env_file:
       - .env
     networks:
-      - inception
+      - backend
+      - frontend
     volumes:
       - wordpress_data:/var/www/html
     depends_on:
       - mariadb
+    healthcheck:
+          test: [ "CMD", "nc", "-z", "wordpress", "9000" ]
+          interval: 1s
+          retries: 40
+
+  nginx:
+    container_name: nginx
+    build:
+      context: requirements/nginx
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - frontend
+    env_file:
+      - .env
+    ports:
+      - "443:443"
+    depends_on:
+      wordpress:
+        condition: service_healthy
+    secrets:
+      - ssl_key
+      - ssl_crt
+    volumes:
+      - wordpress_data:/var/www/html
 
 secrets:
   ssl_key:
@@ -69,6 +74,7 @@ volumes:
       o: 'bind'
 
 networks:
-  bridge:
-  inception:
-    name: inception
+  frontend:
+    name: frontend
+  backend:
+    name: backend

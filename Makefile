@@ -26,6 +26,7 @@ fclean: clean
 	docker rmi srcs-nginx srcs-mariadb srcs-wordpress || true
 	docker volume prune -f
 	docker system prune -f
+	sudo rm -rf /home/$(LOGIN)/data
 
 re: fclean all
 

@@ -5,6 +5,10 @@ RUN apt update -y
 RUN apt install php-fpm php-mysql -y
 
 RUN apt install curl -y
+
+RUN apt install  default-mysql-client -y
+RUN apt install  netcat-openbsd -y
+
 RUN mkdir -p /var/www/html
 
 

@@ -1,5 +1,10 @@
 set -e
 
+until mysqladmin ping -h mariadb -P3306 -u"$ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" --silent; do
+    echo "Waiting for MySQL..."
+    sleep 1
+done
+
 chmod 777  /usr/local/bin/
 cd /var/www/html
 find .  -maxdepth 1  ! -name 'wp-config.php' ! -name '.' -exec rm -rf {} +
@@ -34,11 +39,11 @@ fi
 
 wp theme install astra --activate --allow-root
 
-php -v
-
 sed -i 's/listen = \/run\/php\/php8.2-fpm.sock/listen = 9000/g' /etc/php/8.2/fpm/pool.d/www.conf
 
-mkdir -p /run/php
+wp option update comment_moderation 0  --allow-root
+wp option update comment_whitelist 0  --allow-root
 
+mkdir -p /run/php
 
 /usr/sbin/php-fpm8.2 -F
