@@ -13,8 +13,6 @@ RUN mkdir -p /var/run/mysqld
 #ajout les droit pour l'utilisateur mysql pour run les droits
 RUN chown mysql:mysql /var/run/mysqld
 
-
-
 expose 3306
 
 VOLUME ["/var/lib/mysql"]
