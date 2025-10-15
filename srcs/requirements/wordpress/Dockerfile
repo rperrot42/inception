@@ -18,8 +18,6 @@ EXPOSE 9000
 
 COPY tools/docker-entrypoint.sh /usr/local/bin/
 
-COPY config/wp-config.php /var/www/html/
-
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 #CMD ["mariadbd"]

@@ -7,7 +7,6 @@ done
 
 chmod 777  /usr/local/bin/
 cd /var/www/html
-find .  -maxdepth 1  ! -name 'wp-config.php' ! -name '.' -exec rm -rf {} +
 
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
@@ -18,18 +17,22 @@ chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
 
 
-sed -i -r "s/db1/$MYSQL_DATABASE/1" wp-config.php
-sed -i -r "s/user/$MYSQL_USER/1" wp-config.php
-sed -i -r "s/pwd/$MYSQL_PASSWORD/1" wp-config.php
 
 
-wp core download --path=/var/www/html/ --allow-root
+if [ ! -f /var/www/html/wp-config.php ]; then
+  wp core download --path=/var/www/html/ --allow-root
+    wp config create --dbname=$MYSQL_DATABASE \
+    --dbuser=$MYSQL_USER \
+    --dbpass=$MYSQL_PASSWORD \
+    --dbhost=mariadb:3306 \
+    --dbprefix=wp_ \
+    --allow-root \
 
-if [ ! -f /var/www/wordpress/wp-config.php ]; then
     wp core install --url=$DOMAIN_NAME --title="$WP_TITLE" \
         --admin_user=$WP_ADMIN_USR --admin_password=$WP_ADMIN_PWD \
         --admin_email=$WP_ADMIN_EMAIL --skip-email --allow-root \
          --path=/var/www/html
+
 fi
 
 
@@ -39,10 +42,13 @@ fi
 
 wp theme install astra --activate --allow-root
 
+wp option update comment_moderation 0  --allow-root
+
+wp option update comment_whitelist 0  --allow-root
+
 sed -i 's/listen = \/run\/php\/php8.2-fpm.sock/listen = 9000/g' /etc/php/8.2/fpm/pool.d/www.conf
 
-wp option update comment_moderation 0  --allow-root
-wp option update comment_whitelist 0  --allow-root
+
 
 mkdir -p /run/php
 
