@@ -18,15 +18,6 @@ define( 'DB_COLLATE', '' );
 
 define( 'WP_ALLOW_REPAIR', true );
 
-define( 'AUTH_KEY',         'mettre_une_cle_unique' );
-define( 'SECURE_AUTH_KEY',  'mettre_une_cle_unique' );
-define( 'LOGGED_IN_KEY',    'mettre_une_cle_unique' );
-define( 'NONCE_KEY',        'mettre_une_cle_unique' );
-define( 'AUTH_SALT',        'mettre_une_cle_unique' );
-define( 'SECURE_AUTH_SALT', 'mettre_une_cle_unique' );
-define( 'LOGGED_IN_SALT',   'mettre_une_cle_unique' );
-define( 'NONCE_SALT',       'mettre_une_cle_unique' );
-
 $table_prefix = 'wp_';
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', __DIR__ . '/' );

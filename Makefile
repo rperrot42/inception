@@ -23,7 +23,7 @@ clean:
 	$(DOCKER_COMPOSE) -f srcs/docker-compose.yml down
 
 fclean: clean
-	docker rmi nginx wordpress mariadb || true
+	docker rmi srcs-nginx srcs-mariadb srcs-wordpress || true
 	docker volume prune -f
 	docker system prune -f
 

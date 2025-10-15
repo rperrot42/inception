@@ -69,5 +69,6 @@ volumes:
       o: 'bind'
 
 networks:
+  bridge:
   inception:
     name: inception
